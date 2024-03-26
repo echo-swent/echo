@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -163,7 +164,8 @@ fun Content(innerPadding: PaddingValues) {
 
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
-                sheetState = sheetState
+                sheetState = sheetState,
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             ) {
                 // Sheet content
                 Box(
@@ -214,7 +216,11 @@ fun Content(innerPadding: PaddingValues) {
                     // button to join the event
                     Button(
                         onClick = { /*TODO*/},
-                        modifier = Modifier.align(Alignment.BottomCenter).width(165.dp)
+                        modifier = Modifier.align(Alignment.BottomCenter).width(165.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                            contentColor = MaterialTheme.colorScheme.onSecondary
+                        )
                     ) {
                         Text(
                             text = "Join Event",
@@ -243,7 +249,11 @@ fun Content(innerPadding: PaddingValues) {
                         // button to show people who joined the event
                         Button(
                             onClick = { /*TODO*/},
-                            modifier = Modifier.align(Alignment.BottomEnd).width(135.dp)
+                            modifier = Modifier.align(Alignment.BottomEnd).width(135.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
+                            )
                         ) {
                             // icon of a person
                             Icon(
