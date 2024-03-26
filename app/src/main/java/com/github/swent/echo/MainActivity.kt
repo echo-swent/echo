@@ -6,24 +6,38 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.swent.echo.compose.components.EventInfoSheet
-import com.github.swent.echo.compose.components.TopBar
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.swent.echo.ui.theme.EchoTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,11 +74,49 @@ fun GreetingPreview() {
  * floating action button slots to place the corresponding composables.
  */
 @Preview(showBackground = true)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldAppBase() {
+    // Scroll behavior for the top app bar, makes it pinned
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
-        topBar = { TopBar({}, {}) },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            // Top app bar with title, navigation icon, and actions
+            CenterAlignedTopAppBar(
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
+                title = {
+                    Text(
+                        "Echo",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis, // should not happen
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
+                navigationIcon = { // hamburger menu
+                    IconButton(onClick = { /* do something */}) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = "Menu to access all subpages"
+                        )
+                    }
+                },
+                actions = { // search icon
+                    IconButton(onClick = { /* do something */}) {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = "Search icon to access the search screen"
+                        )
+                    }
+                },
+                scrollBehavior = scrollBehavior,
+            )
+        },
     ) { innerPadding -> // the inner padding makes the content padded according to the top bar
         Content(innerPadding)
     }
@@ -73,45 +125,45 @@ fun ScaffoldAppBase() {
  * Content of the screen contains all the composables that are displayed on the screen (except the
  * top bar or floating buttons that go in the scaffold)
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Content(innerPadding: PaddingValues) {
     Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-        // TODO replace with actual data from the database corresponding to the event clicked
-
-        // title of the event
-        val eventTitle by remember { mutableStateOf("Bowling Tournament") }
-        // organization of the event
-        val eventOrganization by remember { mutableStateOf("Bowling club") }
-        // description of the event
-        val eventDescription by remember {
-            mutableStateOf(
-                "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level."
-            )
+        val sheetState = rememberModalBottomSheetState()
+        val scope = rememberCoroutineScope()
+        // set to false initially, will need to change it to true to show the bottom sheet (by
+        // clicking events)
+        var showBottomSheet by remember { mutableStateOf(true) }
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
+                sheetState = sheetState
+            ) {
+                // Sheet content
+                Box(
+                    modifier =
+                        Modifier.padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 32.dp).width(360.dp)
+                            .height(375.dp)
+                ) {
+                    Text(
+                        text = "Bowling Tournament",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight(600),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                        )
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 24.dp),
+                        text = "Bowling club",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(600),
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                    )
+                }
+            }
         }
-        // date and time of the event
-        val eventDateTime by remember { mutableStateOf("15/05\n18:30") }
-        // image of the event (not sure if that's how images work in the database)
-        val eventImage by remember { mutableIntStateOf(R.drawable.ic_launcher_background) }
-        // number of people who joined the event
-        val eventPeople by remember { mutableIntStateOf(0) }
-        // number of people who can join the event
-        val eventPeopleMax by remember { mutableIntStateOf(0) }
-        val showBottomSheet = remember { mutableStateOf(false) }
-
-        Button(onClick = { showBottomSheet.value = true }) {
-            Icon(imageVector = Icons.Filled.Face, contentDescription = "Join the event")
-            Text("Join the event")
-        }
-
-        EventInfoSheet(
-            showBottomSheet = showBottomSheet,
-            eventTitle = eventTitle,
-            eventOrganization = eventOrganization,
-            eventDescription = eventDescription,
-            eventDateTime = eventDateTime,
-            eventImage = eventImage,
-            eventPeople = eventPeople,
-            eventPeopleMax = eventPeopleMax
-        )
     }
 }
