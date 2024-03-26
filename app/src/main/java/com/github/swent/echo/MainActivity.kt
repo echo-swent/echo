@@ -130,7 +130,6 @@ fun ScaffoldAppBase() {
 fun Content(innerPadding: PaddingValues) {
     Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
         val sheetState = rememberModalBottomSheetState()
-        val scope = rememberCoroutineScope()
         // set to false initially, will need to change it to true to show the bottom sheet (by
         // clicking events)
         var showBottomSheet by remember { mutableStateOf(true) }
