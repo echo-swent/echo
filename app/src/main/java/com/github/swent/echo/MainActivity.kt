@@ -30,6 +30,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -140,6 +141,26 @@ fun Content(innerPadding: PaddingValues) {
         // clicking events)
         var showBottomSheet by remember { mutableStateOf(true) }
         if (showBottomSheet) {
+            // the following variables will be replaced with actual data from the database
+            // title of the event
+            var eventTitle by remember { mutableStateOf("Bowling Tournament") }
+            // organization of the event
+            var eventOrganization by remember { mutableStateOf("Bowling club") }
+            // description of the event
+            var eventDescription by remember {
+                mutableStateOf(
+                    "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level."
+                )
+            }
+            // date and time of the event
+            var eventDateTime by remember { mutableStateOf("15/05\n18:30") }
+            // image of the event (not sure if that's how images work in the database)
+            var eventImage by remember { mutableIntStateOf(R.drawable.ic_launcher_background) }
+            // number of people who joined the event
+            var eventPeople by remember { mutableIntStateOf(0) }
+            // number of people who can join the event
+            var eventPeopleMax by remember { mutableIntStateOf(0) }
+
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
                 sheetState = sheetState
@@ -152,7 +173,7 @@ fun Content(innerPadding: PaddingValues) {
                             .height(375.dp)
                 ) {
                     Text(
-                        text = "Bowling Tournament",
+                        text = eventTitle,
                         style =
                             TextStyle(
                                 fontSize = 24.sp,
@@ -162,7 +183,7 @@ fun Content(innerPadding: PaddingValues) {
                     )
                     Text(
                         modifier = Modifier.padding(top = 24.dp),
-                        text = "Bowling club",
+                        text = eventOrganization,
                         style =
                             TextStyle(
                                 fontSize = 20.sp,
@@ -172,7 +193,7 @@ fun Content(innerPadding: PaddingValues) {
                     )
                     Text(
                         modifier = Modifier.align(Alignment.TopEnd),
-                        text = "15/05\n18:30",
+                        text = eventDateTime,
                         style =
                             TextStyle(
                                 fontSize = 24.sp,
@@ -182,8 +203,7 @@ fun Content(innerPadding: PaddingValues) {
                     )
                     Text(
                         modifier = Modifier.padding(top = 100.dp).width(185.dp),
-                        text =
-                            "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level.",
+                        text = eventDescription,
                         style =
                             TextStyle(
                                 fontSize = 16.sp,
@@ -212,10 +232,13 @@ fun Content(innerPadding: PaddingValues) {
                     ) {
                         // image of the event
                         Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background), // replace with actual image
-                            contentDescription = "Bowling Tournament",
-                            modifier = Modifier.width(135.dp)
-                                .height(135.dp).align(Alignment.TopEnd).clip(RoundedCornerShape(8.dp))
+                            painter = painterResource(id = eventImage), // replace with actual image
+                            contentDescription = eventTitle,
+                            modifier =
+                                Modifier.width(135.dp)
+                                    .height(135.dp)
+                                    .align(Alignment.TopEnd)
+                                    .clip(RoundedCornerShape(8.dp))
                         )
                         // button to show people who joined the event
                         Button(
@@ -229,7 +252,12 @@ fun Content(innerPadding: PaddingValues) {
                             )
                             // text to show the number of people who joined the event
                             Text(
-                                text = " 11/16",
+                                text =
+                                    if (eventPeopleMax <= 0) {
+                                        "$eventPeople"
+                                    } else {
+                                        "$eventPeople/$eventPeopleMax"
+                                    },
                                 style =
                                     TextStyle(
                                         fontSize = 20.sp,
