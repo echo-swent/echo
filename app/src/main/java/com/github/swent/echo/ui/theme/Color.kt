@@ -3,6 +3,7 @@ package com.github.swent.echo.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val DarkGrey = Color(0xFF333333)
+val LightGrey = Color(0xFFBEBEBE)
 val White = Color(0xFFFFFFFF)
 
 val Purple40 = Color(0xFF6650a4)
