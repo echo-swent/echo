@@ -3,15 +3,20 @@ package com.github.swent.echo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,8 +34,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,7 +106,7 @@ fun ScaffoldAppBase() {
                     )
                 },
                 navigationIcon = { // hamburger menu
-                    IconButton(onClick = { /* do something */}) {
+                    IconButton(onClick = { /*TODO*/}) {
                         Icon(
                             imageVector = Icons.Filled.Menu,
                             contentDescription = "Menu to access all subpages"
@@ -106,7 +114,7 @@ fun ScaffoldAppBase() {
                     }
                 },
                 actions = { // search icon
-                    IconButton(onClick = { /* do something */}) {
+                    IconButton(onClick = { /*TODO*/}) {
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = "Search icon to access the search screen"
@@ -140,26 +148,98 @@ fun Content(innerPadding: PaddingValues) {
                 // Sheet content
                 Box(
                     modifier =
-                        Modifier.padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 32.dp).width(360.dp)
+                        Modifier.padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 32.dp)
+                            .width(360.dp)
                             .height(375.dp)
                 ) {
                     Text(
                         text = "Bowling Tournament",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight(600),
-                            color = MaterialTheme.colorScheme.onPrimary,
-                        )
+                        style =
+                            TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight(600),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                            )
                     )
                     Text(
                         modifier = Modifier.padding(top = 24.dp),
                         text = "Bowling club",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight(600),
-                            color = MaterialTheme.colorScheme.tertiary,
-                        )
+                        style =
+                            TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight(600),
+                                color = MaterialTheme.colorScheme.tertiary,
+                            )
                     )
+                    Text(
+                        modifier = Modifier.align(Alignment.TopEnd),
+                        text = "15/05\n18:30",
+                        style =
+                            TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight(600),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                            )
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 100.dp).width(185.dp),
+                        text =
+                            "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level.",
+                        style =
+                            TextStyle(
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight(600),
+                                color = MaterialTheme.colorScheme.onPrimary,
+                            )
+                    )
+                    // button to join the event
+                    Button(
+                        onClick = { /*TODO*/},
+                        modifier = Modifier.align(Alignment.BottomCenter).width(165.dp)
+                    ) {
+                        Text(
+                            text = "Join Event",
+                            style =
+                                TextStyle(
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight(600),
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                )
+                        )
+                    }
+                    // contains the image and the button to show people who have joined the event
+                    Box(
+                        modifier = Modifier.align(Alignment.CenterEnd).width(150.dp).height(200.dp)
+                    ) {
+                        // image of the event
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_launcher_background), // replace with actual image
+                            contentDescription = "Bowling Tournament",
+                            modifier = Modifier.width(135.dp)
+                                .height(135.dp).align(Alignment.TopEnd).clip(RoundedCornerShape(8.dp))
+                        )
+                        // button to show people who joined the event
+                        Button(
+                            onClick = { /*TODO*/},
+                            modifier = Modifier.align(Alignment.BottomEnd).width(135.dp)
+                        ) {
+                            // icon of a person
+                            Icon(
+                                imageVector = Icons.Filled.Face,
+                                contentDescription = "Show people who joined the event"
+                            )
+                            // text to show the number of people who joined the event
+                            Text(
+                                text = " 11/16",
+                                style =
+                                    TextStyle(
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight(600),
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                    )
+                            )
+                        }
+                    }
                 }
             }
         }
