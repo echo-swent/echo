@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    EchoTheme { TopBar() }
+                    EchoTheme { ScaffoldAppBase() }
                 }
             }
         }
@@ -58,7 +58,7 @@ fun GreetingPreview() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar() {
+fun ScaffoldAppBase() {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
@@ -70,7 +70,14 @@ fun TopBar() {
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary,
                     ),
-                title = { Text("Echo", maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.SemiBold) },
+                title = {
+                    Text(
+                        "Echo",
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { /* do something */}) {
                         Icon(
@@ -98,11 +105,5 @@ fun TopBar() {
 @Composable
 fun Content(innerPadding: PaddingValues) {
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-    ) {
-        Greeting("Android")
-    }
+    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) { Greeting("Android") }
 }
