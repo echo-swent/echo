@@ -219,10 +219,11 @@ fun Content(innerPadding: PaddingValues) {
                     Button(
                         onClick = { /*TODO*/},
                         modifier = Modifier.align(Alignment.BottomCenter).width(165.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            contentColor = MaterialTheme.colorScheme.onSecondary
-                        )
+                        colors =
+                            ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary
+                            )
                     ) {
                         Text(
                             text = "Join Event",
@@ -252,10 +253,11 @@ fun Content(innerPadding: PaddingValues) {
                         Button(
                             onClick = { /*TODO*/},
                             modifier = Modifier.align(Alignment.BottomEnd).width(135.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.secondary,
-                                contentColor = MaterialTheme.colorScheme.onSecondary
-                            )
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondary,
+                                    contentColor = MaterialTheme.colorScheme.onSecondary
+                                )
                         ) {
                             // icon of a person
                             Icon(
