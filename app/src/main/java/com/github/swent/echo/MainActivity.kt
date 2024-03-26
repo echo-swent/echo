@@ -142,27 +142,27 @@ fun Content(innerPadding: PaddingValues) {
         // clicking events)
         var showBottomSheet by remember { mutableStateOf(true) }
         if (showBottomSheet) {
-            // the following variables will be replaced with actual data from the database
+
+            // TODO replace with actual data from the database corresponding to the event clicked
+
             // title of the event
-            var eventTitle by remember { mutableStateOf("Bowling Tournament") }
+            val eventTitle by remember { mutableStateOf("Bowling Tournament") }
             // organization of the event
-            var eventOrganization by remember { mutableStateOf("Bowling club") }
+            val eventOrganization by remember { mutableStateOf("Bowling club") }
             // description of the event
-            var eventDescription by remember {
+            val eventDescription by remember {
                 mutableStateOf(
                     "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level."
                 )
             }
             // date and time of the event
-            var eventDateTime by remember { mutableStateOf("15/05\n18:30") }
+            val eventDateTime by remember { mutableStateOf("15/05\n18:30") }
             // image of the event (not sure if that's how images work in the database)
-            var eventImage by remember { mutableIntStateOf(R.drawable.ic_launcher_background) }
+            val eventImage by remember { mutableIntStateOf(R.drawable.ic_launcher_background) }
             // number of people who joined the event
-            var eventPeople by remember { mutableIntStateOf(0) }
+            val eventPeople by remember { mutableIntStateOf(0) }
             // number of people who can join the event
-            var eventPeopleMax by remember { mutableIntStateOf(0) }
-
-            // TODO replace with actual data from the database corresponding to the event clicked
+            val eventPeopleMax by remember { mutableIntStateOf(0) }
 
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
