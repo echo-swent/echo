@@ -162,6 +162,8 @@ fun Content(innerPadding: PaddingValues) {
             // number of people who can join the event
             var eventPeopleMax by remember { mutableIntStateOf(0) }
 
+            // TODO replace with actual data from the database corresponding to the event clicked
+
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
                 sheetState = sheetState,
