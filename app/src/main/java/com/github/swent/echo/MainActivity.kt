@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -30,10 +32,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.swent.echo.ui.theme.EchoTheme
 
 class MainActivity : ComponentActivity() {
@@ -66,8 +70,8 @@ fun GreetingPreview() {
 /**
  * ScaffoldAppBase is the main composable that defines the layout of the screen. It uses the
  * [Scaffold] composable to define the layout structure of the screen. The [Scaffold] composable
- * provides a layout structure for the screen and also provides the top bar, bottom bar, and floating
- * action button slots to place the corresponding composables.
+ * provides a layout structure for the screen and also provides the top bar, bottom bar, and
+ * floating action button slots to place the corresponding composables.
  */
 @Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +106,7 @@ fun ScaffoldAppBase() {
                         )
                     }
                 },
-                actions = {// search icon
+                actions = { // search icon
                     IconButton(onClick = { /* do something */}) {
                         Icon(
                             imageVector = Icons.Filled.Search,
@@ -138,9 +142,26 @@ fun Content(innerPadding: PaddingValues) {
                 // Sheet content
                 Box(
                     modifier =
-                        Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
+                        Modifier.padding(start = 20.dp, end = 20.dp, top = 0.dp, bottom = 32.dp).width(360.dp)
+                            .height(375.dp)
                 ) {
-                    Text("Hello, this is a bottom sheet!")
+                    Text(
+                        text = "Bowling Tournament",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight(600),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                        )
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 24.dp),
+                        text = "Bowling club",
+                        style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight(600),
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                    )
                 }
             }
         }

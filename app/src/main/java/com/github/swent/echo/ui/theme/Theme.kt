@@ -19,7 +19,7 @@ private val DarkColorScheme =
     darkColorScheme(
         primary = DarkGrey,
         secondary = DarkGrey,
-        tertiary = Color.Black,
+        tertiary = LightGrey,
         primaryContainer = DarkGrey,
         onPrimary = White,
     )
