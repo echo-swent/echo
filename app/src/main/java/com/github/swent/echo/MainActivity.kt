@@ -15,17 +15,25 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.github.swent.echo.ui.theme.EchoTheme
 
 class MainActivity : ComponentActivity() {
@@ -55,15 +63,23 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     EchoTheme { Greeting("Android") }
 }
-
+/**
+ * ScaffoldAppBase is the main composable that defines the layout of the screen. It uses the
+ * [Scaffold] composable to define the layout structure of the screen. The [Scaffold] composable
+ * provides a layout structure for the screen and also provides the top bar, bottom bar, and floating
+ * action button slots to place the corresponding composables.
+ */
+@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScaffoldAppBase() {
+    // Scroll behavior for the top app bar, makes it pinned
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
+            // Top app bar with title, navigation icon, and actions
             CenterAlignedTopAppBar(
                 colors =
                     TopAppBarDefaults.topAppBarColors(
@@ -74,11 +90,11 @@ fun ScaffoldAppBase() {
                     Text(
                         "Echo",
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.Ellipsis, // should not happen
                         fontWeight = FontWeight.SemiBold
                     )
                 },
-                navigationIcon = {
+                navigationIcon = { // hamburger menu
                     IconButton(onClick = { /* do something */}) {
                         Icon(
                             imageVector = Icons.Filled.Menu,
@@ -86,7 +102,7 @@ fun ScaffoldAppBase() {
                         )
                     }
                 },
-                actions = {
+                actions = {// search icon
                     IconButton(onClick = { /* do something */}) {
                         Icon(
                             imageVector = Icons.Filled.Search,
@@ -97,13 +113,36 @@ fun ScaffoldAppBase() {
                 scrollBehavior = scrollBehavior,
             )
         },
-    ) { innerPadding ->
+    ) { innerPadding -> // the inner padding makes the content padded according to the top bar
         Content(innerPadding)
     }
 }
-
+/**
+ * Content of the screen contains all the composables that are displayed on the screen (except the
+ * top bar or floating buttons that go in the scaffold)
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Content(innerPadding: PaddingValues) {
-
-    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) { Greeting("Android") }
+    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+        val sheetState = rememberModalBottomSheetState()
+        val scope = rememberCoroutineScope()
+        // set to false initially, will need to change it to true to show the bottom sheet (by
+        // clicking events)
+        var showBottomSheet by remember { mutableStateOf(true) }
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
+                sheetState = sheetState
+            ) {
+                // Sheet content
+                Box(
+                    modifier =
+                        Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
+                ) {
+                    Text("Hello, this is a bottom sheet!")
+                }
+            }
+        }
+    }
 }
