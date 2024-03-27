@@ -99,7 +99,7 @@ fun Content(innerPadding: PaddingValues) {
         // number of people who can join the event
         val eventPeopleMax by remember { mutableIntStateOf(0) }
 
-        var showBottomSheet = remember { mutableStateOf(false) }
+        val showBottomSheet = remember { mutableStateOf(false) }
 
         Button(onClick = { showBottomSheet.value = true }) {
             Icon(
