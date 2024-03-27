@@ -75,9 +75,7 @@ fun ScaffoldAppBase() {
  */
 @Composable
 fun Content(innerPadding: PaddingValues) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(innerPadding)) {
+    Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
         // TODO replace with actual data from the database corresponding to the event clicked
 
         // title of the event
@@ -102,12 +100,8 @@ fun Content(innerPadding: PaddingValues) {
         val showBottomSheet = remember { mutableStateOf(false) }
 
         Button(onClick = { showBottomSheet.value = true }) {
-            Icon(
-                imageVector = Icons.Filled.Face,
-                contentDescription = "Join the event"
-            )
+            Icon(imageVector = Icons.Filled.Face, contentDescription = "Join the event")
             Text("Join the event")
-
         }
 
         EventInfoSheet(
