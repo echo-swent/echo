@@ -64,7 +64,7 @@ fun GreetingPreview() {
 fun ScaffoldAppBase() {
 
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar({}, {}) },
     ) { innerPadding -> // the inner padding makes the content padded according to the top bar
         Content(innerPadding)
     }
