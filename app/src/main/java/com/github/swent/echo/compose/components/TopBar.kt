@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,4 +56,10 @@ fun TopBar(onOpenMenu: () -> Unit, onOpenSearch: () -> Unit) {
         },
         scrollBehavior = scrollBehavior,
     )
+}
+
+@Preview
+@Composable
+fun TopBarPreview() {
+    TopBar({}, {})
 }

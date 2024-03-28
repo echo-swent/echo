@@ -18,12 +18,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -162,4 +165,20 @@ fun EventInfoSheet(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun EventInfoSheetPreview() {
+    EventInfoSheet(
+        showBottomSheet = remember { mutableStateOf(true) },
+        eventTitle = "Bowling Tournament",
+        eventOrganization = "Bowling club",
+        eventDescription =
+            "Individual tournament with 16 participants. Winner and loser brackets will be played at the same time. Amateur level.",
+        eventDateTime = "15/05\n18:30",
+        eventImage = 0,
+        eventPeople = 0,
+        eventPeopleMax = 0
+    )
 }
